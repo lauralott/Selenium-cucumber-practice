@@ -4,8 +4,11 @@ import com.lasalle.automation.vueling.web.model.FlightDTO;
 import net.serenitybdd.core.pages.WebElementFacade;
 import net.thucydides.core.pages.PageObject;
 import org.joda.time.DateTime;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -32,8 +35,14 @@ public class FlightPage extends PageObject {
     @FindBy(css = "#ui-datepicker-div > div.ui-datepicker-group.ui-datepicker-group-first > table > tbody > tr")
     private List<WebElementFacade> datePicker;
 
-    @FindBy(css = "#passengers-popup > div.passengers-popup_action > button")
-    private WebElementFacade btnPassengers;
+    @FindBy(css = "td:not(.ui-state-disabled) a.ui-state-default")
+    private List<WebElementFacade> datesAvailable;
+
+    @FindBy(css = ".ui-state-active")
+    private List<WebElementFacade> currentDay;
+
+    //@FindBy(css = "#passengers-popup > div.passengers-popup_action > button")
+    //private WebElementFacade btnPassengers;
 
     @FindBy(css = "#btnSubmitHomeSearcher")
     private WebElementFacade btnSearch;
@@ -45,41 +54,22 @@ public class FlightPage extends PageObject {
         inputOrigen.click();
         optionOrigin.click();
         optionDestiny.click();
-
-        datePicker.get(3).click();
-      //getCalendar();
-        //btnPassengers.click();
+        clickAvailableDay();
         btnSearch.click();
-        /*
-        typeInto(txtPhone, flight.getDestination());
-        typeInto(txtEmail, flight.getOutbound());
-        typeInto(txtDate, flight.getPassengers());
-
-
-        typeInto(txtNumber, flight.getReturn());
-        typeInto(txtSearch, flight.getTime());
-        display.click();
-
-        evaluateJavascript("arguments[0].value=arguments[1];", txtColor, flight.getColor());
-        btnSave.click();*/
     }
 
-    private void getCalendar(){
+    private void clickAvailableDay(){
 
-        int currentDay = LocalDate.now().getDayOfMonth();
+        int dayNextWeek = Integer.parseInt(currentDay.get(0).getText()) + 7;
 
-        for (int i = 0; i < datePicker.size(); i++) {
+        for (int i = 0; i < datesAvailable.size(); i++) {
+            int day = Integer.parseInt(datesAvailable.get(i).getText());
 
-            String daysInRow = datePicker.get(i).getText();
-
-            /*if(daysInRow.contains(currentDay))
-            {
-                datePicker.get(i+1).click();
-                break;
-            }*/
-
+            if (day > dayNextWeek){
+                datesAvailable.get(i).click();
+                return;
+            }
         }
-
     }
 
 }
