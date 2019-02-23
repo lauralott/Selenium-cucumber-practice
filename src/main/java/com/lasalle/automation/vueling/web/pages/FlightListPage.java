@@ -24,7 +24,6 @@ public class FlightListPage extends PageObject {
     @FindBy(css = "#availabilityTable0 > tbody > tr")
     private List<WebElementFacade> flightsList;
 
-
     public void addReservations(FlightDTO flight){
         flightPage.setDriver(getDriver());
         flightPage.registerflight(flight);

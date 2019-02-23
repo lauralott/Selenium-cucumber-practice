@@ -47,8 +47,6 @@ public class MainSearchTest {
         driver.manage().window().maximize() ;
 
         LOGGER.debug("driver started");
-
-        //LOGGER.debug("before class");
     }
 
     @After
@@ -57,36 +55,14 @@ public class MainSearchTest {
         LOGGER.debug("driver closed");
     }
 
-    @Test
-    public void testTitle() throws InterruptedException {
-        LOGGER.debug("start testTitle");
-
-        URL = "https://www.vueling.com/es";
-
-        System.setProperty ("webdriver.chrome.driver","C:\\Users\\Laura\\Dropbox\\MDAS\\Fundamentos_de_pruebas\\chromedriver.exe" );
-        driver = new ChromeDriver();
-        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS) ;
-        driver.manage().window().maximize() ;
-        driver.get(URL);
-        WebElement origin = driver.findElement(By.cssSelector("div.input-group.ng-untouched.ng-pristine.ng-valid"));
-        //driver.
-
-        //search button
-        WebElement searchBtn = driver.findElement(By.id("btnSubmitHomeSearcher"));
-        searchBtn.click();
-    }
-
     @Given("^I'm main page$")
     public void iMMainPage() {
-        //driver.get(URL);
         page.setDriver(driver);
         page.openAt(URL);
     }
 
     @When("^I try to find a fly$")
     public void tryFindAFly(List<FlightDTO> flightDtoList) {
-        //page.registerflight(flight);
-        //flightListPage.setFlightPage(page);
         flightListPage.setDriver(driver);
         flights = flightDtoList;
         flights.forEach(fl -> flightListPage.addReservations(fl));
@@ -95,9 +71,6 @@ public class MainSearchTest {
     @Then("^I get available flight$")
     public void iGetAvailableFlight() {
         LOGGER.debug("iGetTheReservationInTheReservationsList starts");
-
-        //List<FlightDTO> actualReservations = flightListPage.getReservationList();
-       // assertThat(actualReservations).usingFieldByFieldElementComparator().containsExactlyElementsOf(flights);
         List<WebElementFacade> actualReservations = flightListPage.getReservationList();
         assertThat(actualReservations.size()).isGreaterThan(0);
     }

@@ -159,6 +159,7 @@ task unzipChromeBrowser(type: Copy) {
 }
 
 
-// downloadChromeBrowser
-// downloadChromeDriverServer
+downloadChromeBrowser
+downloadChromeDriverServer
+unzipChromeBrowser
 

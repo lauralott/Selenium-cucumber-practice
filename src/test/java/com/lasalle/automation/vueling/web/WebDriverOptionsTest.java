@@ -44,7 +44,7 @@ public class WebDriverOptionsTest {
     {
         LOGGER.debug("start testWebDrive");
 
-        System.setProperty ("webdriver.chrome.driver","C:\\Users\\Laura\\Dropbox\\MDAS\\Gestión_de_pruebas\\chromedriver.exe");
+        System.setProperty ("webdriver.chrome.driver","C:\\Users\\Laura\\Dropbox\\MDAS\\Fundamentos_de_pruebas\\chromedriver.exe");
         driver = new ChromeDriver();
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS) ;
         driver.manage().window().maximize() ;
