@@ -39,13 +39,20 @@ public class FlightPage extends PageObject {
 
     private void clickAvailableOutbound(String flightOutbound){
 
-        int initOutbound = Integer.parseInt(currentDay.get(0).getText())
-                + getSearchDayOffset(flightOutbound);
+        boolean nextMonth = false;
+        int cDay = Integer.parseInt(currentDay.get(0).getText());
+        int offset = getSearchDayOffset(flightOutbound);
+        int initOutbound = cDay + offset;
+        int minOutbound = cDay - offset;
 
         for (int i = 0; i < datesAvailable.size(); i++) {
             int day = Integer.parseInt(datesAvailable.get(i).getText());
 
-            if (day > initOutbound){
+            if (!nextMonth && day < minOutbound){
+                nextMonth = true;
+            }
+
+            if (day > initOutbound || nextMonth){
                 datesAvailable.get(i).click();
                 return;
             }
