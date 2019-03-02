@@ -39,7 +39,7 @@ public class WebDriverOptionsTest {
 
     private static WebDriver driver;
 
-    @Test
+
     public void testWebDrives() throws InterruptedException
     {
         LOGGER.debug("start testWebDrive");

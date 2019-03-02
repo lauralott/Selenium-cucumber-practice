@@ -8,16 +8,8 @@ import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import net.serenitybdd.core.pages.WebElementFacade;
-import net.thucydides.core.pages.PageObject;
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
-import org.junit.Test;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -41,10 +33,11 @@ public class MainSearchTest {
     public static void beforeClass(){
         URL = "https://www.vueling.com/es";
 
-        System.setProperty ("webdriver.chrome.driver","C:\\Users\\Laura\\Dropbox\\MDAS\\Fundamentos_de_pruebas\\chromedriver.exe" );
+        System.setProperty ("webdriver.chrome.driver","bin\\chromedriver.exe" );
         driver = new ChromeDriver();
         driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS) ;
         driver.manage().window().maximize() ;
+        page.setDriver(driver);
 
         LOGGER.debug("driver started");
     }
@@ -57,12 +50,14 @@ public class MainSearchTest {
 
     @Given("^I'm main page$")
     public void iMMainPage() {
-        page.setDriver(driver);
+        LOGGER.debug("iMMainPage starts");
+
         page.openAt(URL);
     }
 
     @When("^I try to find a fly$")
     public void tryFindAFly(List<FlightDTO> flightDtoList) {
+        LOGGER.debug("tryFindAFly starts");
         flightListPage.setDriver(driver);
         flights = flightDtoList;
         flights.forEach(fl -> flightListPage.addReservations(fl));
@@ -70,7 +65,7 @@ public class MainSearchTest {
 
     @Then("^I get available flight$")
     public void iGetAvailableFlight() {
-        LOGGER.debug("iGetTheReservationInTheReservationsList starts");
+        LOGGER.debug("iGetAvailableFlight starts");
         List<WebElementFacade> actualReservations = flightListPage.getReservationList();
         assertThat(actualReservations.size()).isGreaterThan(0);
     }
